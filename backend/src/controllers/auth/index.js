@@ -121,6 +121,7 @@ const Me = async (req, res, next) => {
 
   try {
     const user = await User.findById(user_id).select("-password -__v");
+
     res.json(user);
   } catch (e) {
     next(e);

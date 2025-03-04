@@ -2,7 +2,7 @@ import JWT from "jsonwebtoken";
 import Boom from "boom";
 import redis from "../clients/redis";
 
-export const signAccessToken = () => {
+export const signAccessToken = (req, res, next) => {
   return new Promise((resolve, reject) => {
     const payload = {
       ...data,
@@ -23,7 +23,7 @@ export const signAccessToken = () => {
   });
 };
 
-export const verifyAccessToken = () => {
+export const verifyAccessToken = (req, res, next) => {
   const authorizationToken = req.headers["authorization"];
   if (!authorizationToken) {
     next(Boom.unauthorized());
@@ -33,6 +33,8 @@ export const verifyAccessToken = () => {
     if (err) {
       return next(Boom.unauthorized(err.name === "JsonWebTokenError" ? "Unauthorized" : err.message));
     }
+    req.payload = payload;
+    next();
   });
 };
 
