@@ -1,6 +1,6 @@
-import Product from "../../models/Product";
+import Product from "../../models/Product.js";
 import Boom from "boom";
-import ProductSchema from "./validations";
+import ProductSchema from "./validations.js";
 
 const Create = async (req, res, next) => {
   const input = req.body;
@@ -72,7 +72,7 @@ const Delete = async (req, res, next) => {
   }
 };
 
-const Update = async (user_id, product_id) => {
+const Update = async (req, res, next) => {
   const { product_id } = req.params;
 
   try {

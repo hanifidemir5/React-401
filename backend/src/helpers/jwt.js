@@ -1,6 +1,6 @@
 import JWT from "jsonwebtoken";
 import Boom from "boom";
-import redis from "../clients/redis";
+import redis from "../clients/redis.js";
 
 export const signAccessToken = (req, res, next) => {
   return new Promise((resolve, reject) => {
@@ -68,6 +68,20 @@ export const verifyRefreshToken = async (refresh_token) => {
         console.log(err);
         reject(Boom.internal());
       }
+    });
+    const user_id = payload.user_id;
+
+    redis.get(user_id, (redisErr, storedToken) => {
+      if (redisErr) {
+        console.log(redisErr);
+        return reject(Boom.internal());
+      }
+
+      if (!storedToken || storedToken !== refresh_token) {
+        return reject(Boom.unauthorized("Refresh token expired or invalid."));
+      }
+
+      resolve(user_id);
     });
   });
 };

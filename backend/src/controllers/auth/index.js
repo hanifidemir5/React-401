@@ -1,8 +1,8 @@
-import { signAccessToken, verifyAccessToken, signRefreshToken, verifyRefreshToken } from "../../helpers/jwt";
-import { ValidationSchema } from "./validations";
-import redis from "../../clients/redis";
+import { signAccessToken, verifyAccessToken, signRefreshToken, verifyRefreshToken } from "../../helpers/jwt.js";
+import { UserSchema } from "./validations.js";
+import redis from "../../clients/redis.js";
 import Boom from "boom";
-import User from "../../models";
+import User from "../../models/User.js";
 
 const Register = async (req, res, next) => {
   const input = req.body;

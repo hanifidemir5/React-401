@@ -1,8 +1,8 @@
 import express from "express";
 const router = express.Router();
 
-import auth from "../controllers/auth";
-import { verifyAccessToken } from "../helpers/jwt";
+import auth from "../controllers/auth/index.js";
+import { verifyAccessToken } from "../helpers/jwt.js";
 
 router.post("/register", auth.Register);
 router.post("/login", auth.Login);

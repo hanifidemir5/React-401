@@ -2,10 +2,10 @@ import express from "express";
 
 const router = express.Router();
 
-import Product from "../controllers/product";
+import Product from "../controllers/product/index.js";
 
-import grantAccess from "../middlewares/grantAccess";
-import { verifyAccessToken } from "../helpers/jwt";
+import grantAccess from "../middlewares/grantAccess.js";
+import { verifyAccessToken } from "../helpers/jwt.js";
 
 router.post("/", verifyAccessToken, grantAccess("createAny", "product"), Product.Create);
 

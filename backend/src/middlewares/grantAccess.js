@@ -1,4 +1,4 @@
-import { roles } from "../roles";
+import { roles } from "../../roles.js";
 import Boom from "boom";
 
 const grantAccess = (action, resource) => {
