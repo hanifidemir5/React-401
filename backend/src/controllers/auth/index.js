@@ -6,8 +6,7 @@ import User from "../../models/User.js";
 
 const Register = async (req, res, next) => {
   const input = req.body;
-
-  const { error } = ValidationSchema.validate(input);
+  const { error } = UserSchema.validate(input);
 
   if (error) {
     return next(Boom.badRequest(error.details[0].message));
@@ -25,7 +24,7 @@ const Register = async (req, res, next) => {
     delete userData.password;
     delete userData.__v;
 
-    const accessToken = await signAccessToken(user._id);
+    const accessToken = await signAccessToken(userData);
     const refreshToken = await signRefreshToken(user._id);
 
     res.json({
@@ -41,7 +40,7 @@ const Register = async (req, res, next) => {
 const Login = async (req, res, next) => {
   const input = req.body;
 
-  const { error } = ValidationSchema.validate(input);
+  const { error } = UserSchema.validate(input);
 
   if (error) {
     return next(Boom.badRequest(error.details[0].message));
@@ -71,7 +70,7 @@ const Login = async (req, res, next) => {
     delete userData.password;
     delete userData.__v;
 
-    res.json({ user: userData, accessToken, refreshToken });
+    const response = res.json({ user: userData, accessToken, refreshToken });
   } catch (e) {
     return next(e);
   }

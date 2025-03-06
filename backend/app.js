@@ -22,11 +22,7 @@ app.use(cors());
 app.use(morgan("dev"));
 
 // Routes
-app.get("/", (req, res) => {
-  res.send("Server is running with MongoDB!");
-});
-
-app.use("/api", router);
+app.use("/", router);
 
 // Start server
 app.listen(PORT, () => {

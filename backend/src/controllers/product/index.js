@@ -4,14 +4,16 @@ import ProductSchema from "./validations.js";
 
 const Create = async (req, res, next) => {
   const input = req.body;
+  console.log(req.body);
   const { error } = ProductSchema.validate(input);
-
   if (error) {
     return next(Boom.badRequest(error.details[0].message));
   }
 
   try {
-    input.photos = JSON.parse(input.photos);
+    if (input.photos) {
+      input.photos = JSON.parse(input.photos);
+    }
     const product = new Product(input);
     const savedData = await product.save();
     res.json(savedData);
@@ -27,7 +29,8 @@ const GetList = async (req, res, next) => {
     page = 1;
   }
 
-  const skip = (parseInt(page) - 1) * stackTraceLimit;
+  const limit = 10; // Define the number of products per page
+  const skip = (parseInt(page) - 1) * limit;
 
   try {
     const products = await Product.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit);

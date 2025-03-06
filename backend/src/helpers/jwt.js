@@ -5,7 +5,7 @@ import redis from "../clients/redis.js";
 export const signAccessToken = (req, res, next) => {
   return new Promise((resolve, reject) => {
     const payload = {
-      ...data,
+      ...req,
     };
     const options = {
       expiresIn: "10d",
@@ -14,7 +14,7 @@ export const signAccessToken = (req, res, next) => {
 
     JWT.sign(payload, process.env.JWT_SECRET, options, (err, token) => {
       if (err) {
-        console.log(err);
+        console.log("JWT Signing Error:", err);
         reject(Boom.internal());
       }
 
@@ -44,13 +44,13 @@ export const signRefreshToken = (user_id) => {
       user_id,
     };
     const options = {
-      exiresIn: "180d",
+      expiresIn: "180d",
       issuer: "ecommerce.app",
     };
 
     JWT.sign(payload, process.env.JWT_SECRET, options, (err, token) => {
       if (err) {
-        console.log(err);
+        console.log("JWT Signing Error:", err);
         reject(Boom.internal());
       }
 
