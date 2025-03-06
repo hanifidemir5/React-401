@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
-import { Button, ButtonGroup } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
 const Navbar = (props) => {
   return (
@@ -12,7 +12,7 @@ const Navbar = (props) => {
         </div>
         <div className={styles.menu}>
           <li>
-            <Link to="/products">Products</Link>
+            <Link to="/">Products</Link>
           </li>
         </div>
       </div>
