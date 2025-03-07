@@ -1,4 +1,4 @@
-import Card from "../Card";
+import Card from "../../components/Card";
 import { Grid } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { fetchProductList } from "../../api";
