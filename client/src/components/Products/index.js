@@ -1,19 +1,18 @@
-import React, { useEffect } from "react";
 import Card from "../Card";
 import { Grid } from "@chakra-ui/react";
-// import { useQuery } from "react-query";
+import { useQuery } from "react-query";
+import { fetchProductList } from "../../api";
 
 const Products = (props) => {
-  // const {isLoading, error, data} = useQuery("respoData",() => {
-  //   fetch("http//localhost:5000/product").then((res) => res.json())
-  // })
+  const { isLoading, error, data } = useQuery("products", fetchProductList);
+
+  if (isLoading) return "Loading...";
+  if (error) return "An error has occured:" + error.message;
 
   return (
     <div>
       <Grid templateColumns={"repeat(3,1fr)"} gap={4}>
-        <Card />
-        <Card />
-        <Card />
+        {data && data.map((item, key) => <Card item={item} key={key} />)}
       </Grid>
     </div>
   );
