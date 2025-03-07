@@ -6,8 +6,15 @@ import reportWebVitals from "./reportWebVitals";
 import "./reset.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "./components/ui/provider";
-
-const queryClient = new QueryClient();
+import { ReactQueryDevtools } from "react-query/devtools";
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,6 +22,7 @@ root.render(
     <Provider>
       <QueryClientProvider client={queryClient}>
         <App />
+        <ReactQueryDevtools initialIsOpen="false" />
       </QueryClientProvider>
     </Provider>
   </React.StrictMode>
