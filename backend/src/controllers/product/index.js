@@ -25,12 +25,8 @@ const Create = async (req, res, next) => {
 const GetList = async (req, res, next) => {
   let { page } = req.query;
 
-  if (page < 1) {
-    page = 1;
-  }
-
-  const limit = 10; // Define the number of products per page
-  const skip = (parseInt(page) - 1) * limit;
+  const limit = 12;
+  const skip = parseInt(page) * limit;
 
   try {
     const products = await Product.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit);

@@ -1,5 +1,5 @@
 import Card from "../../components/Card";
-import { Grid } from "@chakra-ui/react";
+import { Button, Flex, Grid } from "@chakra-ui/react";
 import { useInfiniteQuery } from "react-query";
 import { fetchProductList } from "../../api";
 import React from "react";
@@ -15,7 +15,7 @@ const Products = (props) => {
         if (!morePagesExist) {
           return;
         }
-        return allGroups.length + 1;
+        return allGroups.length + 0;
       },
     }
   );
@@ -37,6 +37,16 @@ const Products = (props) => {
           </React.Fragment>
         ))}
       </Grid>
+      <Flex mt={"10"} justifyContent={"center"}>
+        <Button
+          loading={isFetching || isFetchingNextPage}
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage || isFetchingNextPage}
+        >
+          {isFetchingNextPage ? "loading more" : hasNextPage ? "Load more" : "Nothing more to load"}
+        </Button>
+        <div>{isFetching && !isFetchingNextPage ? "Fetching" : null}</div>
+      </Flex>
     </div>
   );
 };
