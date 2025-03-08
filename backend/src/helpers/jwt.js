@@ -48,7 +48,7 @@ export const signRefreshToken = (user_id) => {
       issuer: "ecommerce.app",
     };
 
-    JWT.sign(payload, process.env.JWT_SECRET, options, (err, token) => {
+    JWT.sign(payload, process.env.JWT_REFRESH_SECRET, options, (err, token) => {
       if (err) {
         console.log("JWT Signing Error:", err);
         reject(Boom.internal());
@@ -63,25 +63,25 @@ export const signRefreshToken = (user_id) => {
 
 export const verifyRefreshToken = async (refresh_token) => {
   return new Promise(async (resolve, reject) => {
-    JWT.verify(refresh_token, process.env.JWT_REFRESH_SECRET, async (err, payload) => {
+    JWT.verify(refresh_token, process.env.JWT_REFRESH_SECRET, (err, payload) => {
       if (err) {
-        console.log(err);
-        reject(Boom.internal());
-      }
-    });
-    const user_id = payload.user_id;
-
-    redis.get(user_id, (redisErr, storedToken) => {
-      if (redisErr) {
-        console.log(redisErr);
+        console.log("jwt verification error");
         return reject(Boom.internal());
       }
+      const user_id = payload.user_id;
 
-      if (!storedToken || storedToken !== refresh_token) {
-        return reject(Boom.unauthorized("Refresh token expired or invalid."));
-      }
+      redis.get(user_id, (redisErr, storedToken) => {
+        if (redisErr) {
+          console.log(redisErr);
+          return reject(Boom.internal());
+        }
 
-      resolve(user_id);
+        if (!storedToken || storedToken !== refresh_token) {
+          return reject(Boom.unauthorized("Refresh token expired or invalid."));
+        }
+
+        resolve(user_id);
+      });
     });
   });
 };

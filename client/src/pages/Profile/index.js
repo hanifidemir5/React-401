@@ -1,16 +1,35 @@
 import React from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { Box, Code, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Code, Heading, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const Profile = (props) => {
-  const { user } = useAuth();
-
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   return (
-    <Box>
-      <Heading>Profile</Heading>
-      <Text>{user.email}</Text>
-      <Code>{JSON.stringify(user)}</Code>
-    </Box>
+    <>
+      {user && (
+        <Box>
+          <Heading>Profile</Heading>
+          <Text>{user.email}</Text>
+          <Code>{JSON.stringify(user)}</Code>
+          <Button
+            onClick={async () => {
+              try {
+                await logout();
+                navigate("/");
+              } catch (e) {
+                console.log(e);
+              }
+            }}
+            mt={2}
+            colorScheme={"red"}
+          >
+            Logout
+          </Button>
+        </Box>
+      )}
+    </>
   );
 };
 

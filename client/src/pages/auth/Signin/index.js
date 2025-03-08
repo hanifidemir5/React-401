@@ -3,8 +3,12 @@ import { Box, Flex, Heading, FormControl, FormLabel, Alert, Input, Button, Text 
 import { Field, Form, Formik } from "formik";
 import { signInValidation } from "../validations";
 import { fetchLogin } from "../../../api";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
   return (
     <Flex align="center" w="full" justifyContent="center">
       <Box pt={10}>
@@ -18,7 +22,8 @@ const Signin = () => {
             onSubmit={async (values, bag) => {
               try {
                 const registerResponse = await fetchLogin({ email: values.email, password: values.password });
-                console.log(registerResponse);
+                await login(registerResponse);
+                return navigate("/");
               } catch (e) {
                 bag.setErrors({ general: e.response.data.message });
               }

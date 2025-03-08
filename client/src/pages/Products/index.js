@@ -16,7 +16,6 @@ const Products = () => {
 
   if (status === "loading") return <p>Loading...</p>;
   if (status === "error") return <p>An error has occurred: {error.message}</p>;
-
   return (
     <div>
       <Grid templateColumns="repeat(3, 1fr)" gap={4}>

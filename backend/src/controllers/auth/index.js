@@ -97,8 +97,7 @@ const RefreshToken = async (req, res, next) => {
 
 const Logout = async (req, res, next) => {
   try {
-    const { refresh_token } = req.body;
-
+    const refresh_token = req.body.refresh_token;
     if (!refresh_token) {
       throw Boom.badRequest();
     }
