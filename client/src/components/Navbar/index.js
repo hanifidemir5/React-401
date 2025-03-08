@@ -5,7 +5,6 @@ import { Button } from "@chakra-ui/react";
 import { useAuth } from "../../contexts/AuthContext.js";
 const Navbar = (props) => {
   const { loggedIn } = useAuth();
-  console.log(loggedIn);
   return (
     <nav className={styles.nav}>
       <div className={styles.left}>

@@ -44,7 +44,3 @@ app.use((err, req, res, next) => {
     message: "Internal Server Error",
   });
 });
-
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
-});

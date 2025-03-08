@@ -7,6 +7,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 
 const Signup = () => {
   const { login } = useAuth();
+
   return (
     <Flex align="center" w="full" justifyContent="center">
       <Box pt={10}>

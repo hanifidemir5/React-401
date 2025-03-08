@@ -3,6 +3,7 @@ import { UserSchema } from "./validations.js";
 import redis from "../../clients/redis.js";
 import Boom from "boom";
 import User from "../../models/User.js";
+import mongoose from "mongoose";
 
 const Register = async (req, res, next) => {
   const input = req.body;
@@ -116,11 +117,9 @@ const Logout = async (req, res, next) => {
 };
 
 const Me = async (req, res, next) => {
-  const { user_id } = req.payload;
-
+  const user_id = req.payload._id;
   try {
     const user = await User.findById(user_id).select("-password -__v");
-
     res.json(user);
   } catch (e) {
     next(e);
