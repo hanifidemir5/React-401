@@ -1,6 +1,6 @@
 import Card from "../../components/Card";
 import { Button, Flex, Grid } from "@chakra-ui/react";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchProductList } from "../../api";
 import React from "react";
 import { Box } from "@chakra-ui/react";

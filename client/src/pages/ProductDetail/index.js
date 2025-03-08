@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { fetchProduct } from "../../api";
 import { Box, Text, Button } from "@chakra-ui/react";
 import moment from "moment";
