@@ -1,10 +1,12 @@
 import React from "react";
 import { Box, Flex, Heading, FormControl, FormLabel, Alert, Input, Button, Text } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import validationSchema from "./validations";
+import { signUpValidation } from "../validations";
 import { fetchRegister } from "../../../api";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const Signup = () => {
+  const { login } = useAuth();
   return (
     <Flex align="center" w="full" justifyContent="center">
       <Box pt={10}>
@@ -14,11 +16,12 @@ const Signup = () => {
         <Box my={5} textAlign="left">
           <Formik
             initialValues={{ email: "", password: "", passwordConfirm: "" }}
-            validationSchema={validationSchema}
+            validationSchema={signUpValidation}
             onSubmit={async (values, bag) => {
               try {
                 const registerResponse = await fetchRegister({ email: values.email, password: values.password });
-                console.log(registerResponse.response);
+                login(registerResponse);
+                console.log(registerResponse);
               } catch (e) {
                 bag.setErrors({ general: e.response.data.message });
                 console.log(e);
@@ -37,7 +40,7 @@ const Signup = () => {
                 <FormControl>
                   <FormLabel>Email</FormLabel>
                   <Field as={Input} name="email" isInvalid={errors.email && touched.email} />
-                  {errors.email && touched.email ? <Text>{errors.email}</Text> : null}
+                  {errors.email && touched.email ? <Text color={"red !important"}>{errors.email}</Text> : null}
                 </FormControl>
 
                 <FormControl>

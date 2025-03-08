@@ -14,3 +14,8 @@ export const fetchRegister = async (formdata) => {
   const { response } = await axios.post(`${process.env.REACT_APP_BASE_ENDPOINT}/auth/register`, formdata);
   return response;
 };
+
+export const fetchLogin = async (formdata) => {
+  const { response } = await axios.post(`${process.env.REACT_APP_BASE_ENDPOINT}/auth/login`, formdata);
+  return response;
+};
