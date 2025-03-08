@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Flex, Heading, FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Box, Flex, Heading, FormControl, FormLabel, Alert, Input, Button, Text } from "@chakra-ui/react";
+import { Field, Form, Formik } from "formik";
 import validationSchema from "./validations";
+import { fetchRegister } from "../../../api";
 
 const Signup = () => {
   return (
@@ -14,30 +15,49 @@ const Signup = () => {
           <Formik
             initialValues={{ email: "", password: "", passwordConfirm: "" }}
             validationSchema={validationSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              console.log(values);
+            onSubmit={async (values, bag) => {
+              try {
+                const registerResponse = await fetchRegister({ email: values.email, password: values.password });
+                console.log(registerResponse.response);
+              } catch (e) {
+                bag.setErrors({ general: e.response.data.message });
+                console.log(e);
+              }
             }}
           >
-            {({ isSubmitting, isValid, dirty }) => (
+            {({ isSubmitting, isValid, dirty, errors, touched }) => (
               <Form>
+                <Box>
+                  {errors.general && (
+                    <Alert backgroundColor={"red"} color={"white"}>
+                      {errors.general}
+                    </Alert>
+                  )}
+                </Box>
                 <FormControl>
                   <FormLabel>Email</FormLabel>
-                  <Field as={Input} name="email" />
-                  <ErrorMessage name="email" component="div" />
+                  <Field as={Input} name="email" isInvalid={errors.email && touched.email} />
+                  {errors.email && touched.email ? <Text>{errors.email}</Text> : null}
                 </FormControl>
 
                 <FormControl>
                   <FormLabel>Password</FormLabel>
-                  <Field as={Input} name="password" type="password" />
-                  <ErrorMessage name="password" component="div" />
+                  <Field as={Input} name="password" type="password" isInvalid={errors.password && touched.password} />
+                  {errors.password && touched.password ? <Text color={"red"}>{errors.password}</Text> : null}
                 </FormControl>
 
                 <FormControl>
                   <FormLabel>Password Confirm</FormLabel>
-                  <Field as={Input} name="passwordConfirm" type="password" />
-                  <ErrorMessage name="passwordConfirm" component="div" />
+                  <Field
+                    as={Input}
+                    name="passwordConfirm"
+                    type="password"
+                    isInvalid={errors.passwordConfirm && touched.passwordConfirm}
+                  />
+                  {errors.passwordConfirm && touched.passwordConfirm ? (
+                    <Text color={"red"}>{errors.passwordConfirm}</Text>
+                  ) : null}
                 </FormControl>
-
                 <Button mt={4} w="full" type="submit" isDisabled={isSubmitting || !isValid || !dirty}>
                   Sign up
                 </Button>

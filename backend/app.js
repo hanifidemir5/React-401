@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import router from "./src/routes/index.js";
+import Boom from "boom";
 // Load environment variables
 dotenv.config();
 
@@ -29,4 +30,21 @@ app.use("/", router);
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+});
+
+app.use((err, req, res, next) => {
+  if (Boom.isBoom(err)) {
+    // If it's a Boom error, send the Boom formatted response
+    return res.status(err.output.statusCode).json(err.output.payload);
+  }
+
+  // Generic error handler for unhandled errors
+  return res.status(500).json({
+    statusCode: 500,
+    message: "Internal Server Error",
+  });
+});
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
 });
