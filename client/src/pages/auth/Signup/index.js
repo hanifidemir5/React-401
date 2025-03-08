@@ -4,9 +4,10 @@ import { Field, Form, Formik } from "formik";
 import { signUpValidation } from "../validations";
 import { fetchRegister } from "../../../api";
 import { useAuth } from "../../../contexts/AuthContext";
-
+import { useNavigate } from "react-router-dom";
 const Signup = () => {
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <Flex align="center" w="full" justifyContent="center">
@@ -22,7 +23,7 @@ const Signup = () => {
               try {
                 const registerResponse = await fetchRegister({ email: values.email, password: values.password });
                 login(registerResponse);
-                console.log(registerResponse);
+                return navigate("/");
               } catch (e) {
                 bag.setErrors({ general: e.response.data.message });
                 console.log(e);
