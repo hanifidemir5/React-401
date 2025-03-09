@@ -21,7 +21,8 @@ const Signin = () => {
             validationSchema={signInValidation}
             onSubmit={async (values, bag) => {
               try {
-                await fetchLogin({ email: values.email, password: values.password });
+                const loginResponse = await fetchLogin({ email: values.email, password: values.password });
+                login(loginResponse);
                 return navigate("/");
               } catch (e) {
                 bag.setErrors({ general: e.response.data.message });
