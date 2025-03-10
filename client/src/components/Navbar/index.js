@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import { Button } from "@chakra-ui/react";
 import { useAuth } from "../../contexts/AuthContext.js";
+import { useBasket } from "../../contexts/BasketContext.js";
 const Navbar = (props) => {
   const { loggedIn } = useAuth();
+  const { items } = useBasket();
+
   return (
     <nav className={styles.nav}>
       <div className={styles.left}>
@@ -28,9 +31,18 @@ const Navbar = (props) => {
             </Link>
           </>
         ) : (
-          <Link to={"/profile"}>
-            <Button colorScheme="red">Profile</Button>
-          </Link>
+          <>
+            {items.length > 0 && (
+              <Link to="/basket">
+                <Button colorScheme="pink" variant={"outline"}>
+                  Basket ({items.length})
+                </Button>
+              </Link>
+            )}
+            <Link to={"/profile"}>
+              <Button colorScheme="red">Profile</Button>
+            </Link>
+          </>
         )}
       </div>
     </nav>
