@@ -9,6 +9,7 @@ import { Provider } from "./components/ui/provider";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Basket from "./pages/Basket";
+import Error404 from "./pages/Error404";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/profile" element={<Profile />} />
             </Route>
+            <Route path="*" element={<Error404 />} />
           </Routes>
         </div>
       </Provider>
