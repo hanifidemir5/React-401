@@ -10,7 +10,10 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Basket from "./pages/Basket";
 import Error404 from "./pages/Error404";
-
+import Admin from "./pages/Admin";
+import Home from "./pages/Admin/Home";
+import AdminProducts from "./pages/Admin/Products/index.js";
+import Orders from "./pages/Admin/Orders/index.js";
 function App() {
   return (
     <BrowserRouter>
@@ -25,7 +28,13 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/profile" element={<Profile />} />
+              <Route path="/admin" element={<Admin />} admin={true}>
+                <Route index element={<Home />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="products" element={<AdminProducts />} />
+              </Route>
             </Route>
+
             <Route path="*" element={<Error404 />} />
           </Routes>
         </div>

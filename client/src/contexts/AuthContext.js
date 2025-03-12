@@ -14,12 +14,13 @@ const AuthProvider = ({ children }) => {
     (async () => {
       try {
         const me = await fetchMe();
-
         setLoggedIn(true);
         setUser(me);
         setLoading(false);
       } catch (e) {
         setLoading(false);
+        setLoggedIn(false);
+        setUser(null);
         console.log(e);
       }
     })();

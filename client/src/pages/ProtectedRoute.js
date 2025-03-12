@@ -2,10 +2,15 @@ import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = () => {
-  const { loggedIn } = useAuth();
+const ProtectedRoute = ({ admin }) => {
+  const { loggedIn, user } = useAuth();
 
-  return loggedIn ? <Outlet /> : <Navigate to="/" replace />;
+  if (!loggedIn) {
+    return <Navigate to="/signin" replace />;
+  }
+  console.log(admin, user.role);
+
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

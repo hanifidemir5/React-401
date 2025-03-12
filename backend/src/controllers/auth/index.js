@@ -116,7 +116,7 @@ const Logout = async (req, res, next) => {
 };
 
 const Me = async (req, res, next) => {
-  const user_id = req.payload._id;
+  const user_id = req.payload.user_id;
   try {
     const user = await User.findById(user_id).select("-password -__v");
     res.json(user);

@@ -5,9 +5,8 @@ import { Button } from "@chakra-ui/react";
 import { useAuth } from "../../contexts/AuthContext.js";
 import { useBasket } from "../../contexts/BasketContext.js";
 const Navbar = (props) => {
-  const { loggedIn } = useAuth();
+  const { loggedIn, user } = useAuth();
   const { items } = useBasket();
-
   return (
     <nav className={styles.nav}>
       <div className={styles.left}>
@@ -39,6 +38,15 @@ const Navbar = (props) => {
                 </Button>
               </Link>
             )}
+
+            {user?.role === "admin" && (
+              <Link to={"/admin"}>
+                <Button colorScheme="pink" variant={"ghost"}>
+                  Admin
+                </Button>
+              </Link>
+            )}
+
             <Link to={"/profile"}>
               <Button colorScheme="red">Profile</Button>
             </Link>
