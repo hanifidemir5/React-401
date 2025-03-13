@@ -13,7 +13,7 @@ const Create = async (req, res, next) => {
   if (error) {
     return next(Boom.badRequest(error.details[0].message));
   }
-  const user_id = new mongoose.Types.ObjectId(req.payload._id);
+  const user_id = new mongoose.Types.ObjectId(req.payload.user_id);
   const user = await User.findById(user_id);
 
   if (!user) {
@@ -33,12 +33,11 @@ const Create = async (req, res, next) => {
     const totalAmount = orderItems.reduce((sum, item) => sum + item.price, 0);
 
     const order = new Order({
-      user: user_id,
+      user: user,
       address: input.address,
       items: orderItems,
       totalAmount: totalAmount,
     });
-    console.log(order);
 
     const savedData = await order.save();
 

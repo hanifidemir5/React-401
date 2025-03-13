@@ -21,6 +21,11 @@ export const fetchProductList = async ({ pageParam = 0 }) => {
   return data;
 };
 
+export const fetchOrders = async () => {
+  const { data } = await axios(`${process.env.REACT_APP_BASE_ENDPOINT}/order`);
+  return data;
+};
+
 export const fetchProduct = async (product_id) => {
   const { data } = await axios(`${process.env.REACT_APP_BASE_ENDPOINT}/product/${product_id}`);
   return data;

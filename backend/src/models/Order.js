@@ -5,8 +5,7 @@ const Schema = mongoose.Schema;
 const OrderSchema = new Schema(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: mongoose.Schema.Types.Mixed,
       required: true,
     },
     items: [
