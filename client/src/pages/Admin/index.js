@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate, Outlet, Routes } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 import "./index.css";
 import { useAuth } from "../../contexts/AuthContext";
