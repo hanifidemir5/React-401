@@ -1,12 +1,38 @@
-import { Box, Button, FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchProduct } from "../../../api";
-import { useParams } from "react-router-dom";
-
+import { Box, Button, FormControl, FormLabel, Input, Text, Textarea } from "@chakra-ui/react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { fetchProduct, updateProduct } from "../../../api";
+import { useNavigate, useParams } from "react-router-dom";
 import { FieldArray, Form, Formik } from "formik";
-
+import validationSchema from "./validations";
+import { message } from "antd";
 const ProductDetail = () => {
   const { product_id } = useParams();
+
+  const queryClient = useQueryClient();
+
+  const navigate = useNavigate();
+
+  const updateMutation = useMutation({
+    mutationFn: (updatedData) => updateProduct(updatedData, product_id), // Correct function
+    onSuccess: () => {
+      queryClient.invalidateQueries(["admin:products"]); // Refresh product list
+      queryClient.invalidateQueries(["admin:product", product_id]); // Refresh the updated product
+      navigate("/admin/products"); // Redirect after update
+    },
+  });
+
+  const handleSubmit = async (values, bag) => {
+    message.loading({ content: "Loading...", key: "product_update" });
+
+    try {
+      updateMutation.mutate(values, {
+        onError: (error) => alert(error.message),
+      });
+      message.success({ content: "The product successfully updated.", key: "product_update", duration: 2 });
+    } catch (e) {
+      message.error({ content: "The product is not updated properly." });
+    }
+  };
 
   const { isLoading, isError, error, data } = useQuery({
     queryKey: ["admin:product", product_id],
@@ -21,10 +47,6 @@ const ProductDetail = () => {
     return <div>Error message: {error.message}</div>;
   }
 
-  const handleSubmit = (values) => {
-    console.log("Submitted values:", values);
-  };
-
   return (
     <Box>
       <Formik
@@ -34,6 +56,7 @@ const ProductDetail = () => {
           photos: data.photos || [],
           price: data.price,
         }}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ handleSubmit, errors, touched, handleChange, handleBlur, values, isSubmitting }) => (
@@ -48,7 +71,14 @@ const ProductDetail = () => {
                     onBlur={handleBlur}
                     disabled={isSubmitting}
                     value={values.title}
+                    isInvalid={touched.title && errors.title}
                   />
+
+                  {touched.title && errors.title && (
+                    <Text color="red" fontWeight={"bold"} mt={1}>
+                      {errors.title}
+                    </Text>
+                  )}
                 </FormControl>
 
                 <FormControl mt={4}>
@@ -59,18 +89,31 @@ const ProductDetail = () => {
                     onBlur={handleBlur}
                     disabled={isSubmitting}
                     value={values.description}
+                    isInvalid={touched.description && errors.description}
                   />
+                  {touched.description && errors.description && (
+                    <Text color="red" fontWeight={"bold"} mt={1}>
+                      {errors.description}
+                    </Text>
+                  )}
                 </FormControl>
 
                 <FormControl mt={4}>
                   <FormLabel>Price</FormLabel>
                   <Input
                     name="price"
+                    type="number"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     disabled={isSubmitting}
                     value={values.price}
+                    isInvalid={touched.price && errors.price}
                   />
+                  {touched.price && errors.price && (
+                    <Text color="red" fontWeight={"bold"} mt={1}>
+                      {errors.price}
+                    </Text>
+                  )}
                 </FormControl>
 
                 <FormControl mt={4}>

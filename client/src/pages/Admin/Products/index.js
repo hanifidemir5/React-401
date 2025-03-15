@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchProductList, deleteProduct } from "../../../api";
-import { Table, Popconfirm, Button } from "antd";
+import { Table, Popconfirm } from "antd";
+import { Button } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -37,7 +38,7 @@ const AdminProducts = (props) => {
         key: "createdAt",
         render: (text, record) => (
           <>
-            <Button style={{ display: "inline-block", backgroundColor: "blue", color: "white" }}>
+            <Button colorScheme="blue">
               <Link to={`/admin/products/${record._id}`}>Edit</Link>
             </Button>
             <Popconfirm
@@ -52,7 +53,7 @@ const AdminProducts = (props) => {
               cancelText={"No"}
               placement="left"
             >
-              <Button style={{ marginLeft: 10, display: "inline-block", backgroundColor: "red", color: "white" }}>
+              <Button ml={2} colorScheme="red">
                 Delete
               </Button>
             </Popconfirm>

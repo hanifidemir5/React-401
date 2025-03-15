@@ -71,15 +71,21 @@ const Delete = async (req, res, next) => {
 };
 
 const Update = async (req, res, next) => {
-  const { product_id } = req.params;
+  const { product_id } = req.params; // Correctly extract product_id
 
   try {
     const updated = await Product.findByIdAndUpdate(product_id, req.body, {
-      new: true,
+      new: true, // Returns the updated document
+      runValidators: true, // Ensures validation rules are applied
     });
+
+    if (!updated) {
+      return res.status(404).json({ message: "Product not found" }); // Handle case where product doesn't exist
+    }
 
     res.json(updated);
   } catch (e) {
+    console.log("error", e);
     next(e);
   }
 };
