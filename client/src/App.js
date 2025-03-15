@@ -15,6 +15,7 @@ import Home from "./pages/Admin/Home";
 import AdminProducts from "./pages/Admin/Products/index.js";
 import Orders from "./pages/Admin/Orders/index.js";
 import AdminProductDetail from "./pages/Admin/ProductDetail/index.js";
+import NewProduct from "./pages/Admin/Products/new.js";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                 <Route path="orders" element={<Orders />} />
                 <Route path={`products/:product_id`} element={<AdminProductDetail />} />
                 <Route path="products" element={<AdminProducts />} />
+                <Route path="products/new" element={<NewProduct />} />
               </Route>
             </Route>
 

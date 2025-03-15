@@ -4,6 +4,8 @@ import ProductSchema from "./validations.js";
 
 const Create = async (req, res, next) => {
   const input = req.body;
+  console.log(input);
+
   const { error } = ProductSchema.validate(input);
   if (error) {
     return next(Boom.badRequest(error.details[0].message));

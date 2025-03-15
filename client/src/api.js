@@ -67,3 +67,8 @@ export const updateProduct = async (input, product_id) => {
   const { data } = await axios.put(`${process.env.REACT_APP_BASE_ENDPOINT}/product/${product_id}`, input);
   return data;
 };
+
+export const createProduct = async (input) => {
+  const { data } = await axios.post(`${process.env.REACT_APP_BASE_ENDPOINT}/product`, input);
+  return data;
+};
