@@ -14,6 +14,8 @@ import Admin from "./pages/Admin";
 import Home from "./pages/Admin/Home";
 import AdminProducts from "./pages/Admin/Products/index.js";
 import Orders from "./pages/Admin/Orders/index.js";
+import AdminProductDetail from "./pages/Admin/ProductDetail/index.js";
+
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +33,7 @@ function App() {
               <Route path="/admin" element={<Admin />} admin={true}>
                 <Route index element={<Home />} />
                 <Route path="orders" element={<Orders />} />
+                <Route path={`products/:product_id`} element={<AdminProductDetail />} />
                 <Route path="products" element={<AdminProducts />} />
               </Route>
             </Route>

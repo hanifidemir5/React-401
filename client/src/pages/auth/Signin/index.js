@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Flex, Heading, FormControl, FormLabel, Alert, Input, Button, Text } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { signInValidation } from "../validations";
@@ -7,8 +7,15 @@ import { useAuth } from "../../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
-  const { login } = useAuth();
+  const { login, loggedIn } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/");
+    }
+  }, [navigate, loggedIn]);
+
   return (
     <Flex align="center" w="full" justifyContent="center">
       <Box pt={10}>

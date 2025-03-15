@@ -60,7 +60,7 @@ const AdminProducts = (props) => {
         ),
       },
     ];
-  }, []);
+  }, [deleteMutation]);
 
   if (isLoading) {
     return <div>Loading..</div>;

@@ -41,22 +41,17 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("refresh-token");
   };
 
-  const values = {
-    loggedIn,
-    user,
-    login,
-    logout,
-  };
-
-  if (loading) {
-    return (
-      <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
-        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" size={"xl"} color="red.500" />
-      </Flex>
-    );
-  }
-
-  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ loggedIn, user, login, logout, loading }}>
+      {loading ? (
+        <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
+          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" size={"xl"} color="red.500" />
+        </Flex>
+      ) : (
+        children
+      )}
+    </AuthContext.Provider>
+  );
 };
 
 const useAuth = () => useContext(AuthContext);
