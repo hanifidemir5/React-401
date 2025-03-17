@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { Image } from "@chakra-ui/react";
 import moment from "moment";
@@ -11,27 +11,41 @@ const Card = ({ item }) => {
   const findBasketItem = items.find((basket_item) => basket_item._id === item._id);
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="3">
+    <Box
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      width={"400px"}
+      boxShadow={" 0px 4px 10px rgba(0, 0, 0, 0.1)"}
+    >
       <Link to={`/product/${item._id}`}>
         <Image src={item.photos[0]} alt="product" loading="lazy"></Image>
-        <Box p={"6"}>
+        <Box p={"6"} display={"flex"} flexDir={"column"}>
           <Box display="flex" alignItems={"baseline"}>
             {moment(item.createdAt).format("DD/MM/YYYY")}
           </Box>
-          <Box marginTop="1" fontWeight={"semibold"} as="h4" lineHeight={"tight"}>
+          <Box fontWeight={"semibold"} fontSize={"2xl"} lineHeight={"tight"}>
             {item.title}
           </Box>
-          <Box>{item.price} TL</Box>
+          <Text maxH={"20px"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
+            {item.description}
+          </Text>
         </Box>
       </Link>
-      <Button
-        backgroundColor={findBasketItem ? "pink" : "green"}
-        color={"white"}
-        variant={"solid"}
-        onClick={() => addToBasket(item, findBasketItem)}
-      >
-        {findBasketItem ? "Remove from basket." : "Add to Basket"}
-      </Button>
+      <Box m={2} display={"flex"} flexDir={"column"} justifyContent={"flex-end"}>
+        <Box alignSelf={"flex-end"} fontWeight={"bold"} fontSize={"lg"}>
+          {item.price} TL
+        </Box>
+        <Button
+          backgroundColor={findBasketItem ? "pink" : "green"}
+          color={"white"}
+          alignSelf={"flex-end"}
+          variant={"solid"}
+          onClick={() => addToBasket(item, findBasketItem)}
+        >
+          {findBasketItem ? "Remove from basket." : "Add to Basket"}
+        </Button>
+      </Box>
     </Box>
   );
 };

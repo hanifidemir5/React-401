@@ -18,7 +18,7 @@ const Products = () => {
   if (status === "error") return <p>An error has occurred: {error.message}</p>;
   return (
     <div>
-      <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+      <Grid templateColumns="repeat(4, 1fr)" gap={4} mt={5}>
         {data?.pages?.map((group, i) => (
           <React.Fragment key={i}>
             {group.map((item) => (
