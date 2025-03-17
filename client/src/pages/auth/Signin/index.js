@@ -48,7 +48,7 @@ const Signin = () => {
                 <FormControl>
                   <FormLabel>Email</FormLabel>
                   <Field as={Input} name="email" isInvalid={errors.email && touched.email} />
-                  {errors.email && touched.email ? <Text>{errors.email}</Text> : null}
+                  {errors.email && touched.email ? <Text color={"red"}>{errors.email}</Text> : null}
                 </FormControl>
 
                 <FormControl>

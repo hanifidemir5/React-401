@@ -15,7 +15,7 @@ const Card = ({ item }) => {
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
-      width={"400px"}
+      width={"300px"}
       boxShadow={" 0px 4px 10px rgba(0, 0, 0, 0.1)"}
     >
       <Link to={`/product/${item._id}`}>
