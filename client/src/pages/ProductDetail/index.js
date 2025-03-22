@@ -25,17 +25,26 @@ const ProductDetail = (props) => {
   const images = data.photos.map((url) => ({ original: url }));
 
   return (
-    <Box>
-      <Button colorScheme={findBasketItem ? "pink" : "green"} onClick={() => addToBasket(data, findBasketItem)}>
-        {findBasketItem ? "Remove from basket" : "Add to basket"}
-      </Button>
-      <Text as="h2" fontSize={"2xl"}>
-        {data.title}
-      </Text>
-      <Text>{moment(data.createdAt).format("DD/MM/YYYY")}</Text>
-      <p>{data.description}</p>
-      <Box margin={"10"}>
+    <Box display={"flex"} margin={20} gap={"1rem"} position={"relative"}>
+      <Box width={800} alignSelf={"center"}>
         <ImageGallery items={images} showThumbnails={false} />
+      </Box>
+      <Box display={"flex"} gap={"1rem"} flexDir={"column"}>
+        <Text as="h2" fontSize={"2xl"}>
+          {data.title}
+        </Text>
+        <Text>{moment(data.createdAt).format("DD/MM/YYYY")}</Text>
+        <p>{data.description}</p>
+        <Button
+          position={"absolute"}
+          bottom={0}
+          right={0}
+          alignSelf={"flex-end"}
+          colorScheme={findBasketItem ? "pink" : "green"}
+          onClick={() => addToBasket(data, findBasketItem)}
+        >
+          {findBasketItem ? "Remove from basket" : "Add to basket"}
+        </Button>
       </Box>
     </Box>
   );

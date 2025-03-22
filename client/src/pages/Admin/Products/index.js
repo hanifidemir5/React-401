@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const AdminProducts = (props) => {
   const { isLoading, isError, data, error } = useQuery({ queryKey: ["admin:products"], queryFn: fetchProductList });
-
+  console.log(data);
   const deleteMutation = useMutation({
     mutationFn: deleteProduct,
     onSuccess: () => queryClient.invalidateQueries("admin:products"),

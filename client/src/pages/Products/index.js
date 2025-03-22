@@ -10,15 +10,17 @@ const Products = () => {
     queryFn: fetchProductList,
     getNextPageParam: (lastPage, allPages) => {
       const morePagesExist = lastPage?.length === 12;
-      return morePagesExist ? allPages.length + 1 : undefined;
+      return morePagesExist ? allPages.length : undefined;
     },
   });
 
   if (status === "loading") return <p>Loading...</p>;
   if (status === "error") return <p>An error has occurred: {error.message}</p>;
+  console.log(data);
+
   return (
     <div>
-      <Grid display={"flex"} flexWrap={"wrap"} justifyContent={"space-around"} width={"100%"} gap={4} mt={5}>
+      <Grid display={"flex"} flexWrap={"wrap"} justifyContent={"space-around"} width={"100%"} gap={8} mt={5}>
         {data?.pages?.map((group, i) => (
           <React.Fragment key={i}>
             {group.map((item) => (

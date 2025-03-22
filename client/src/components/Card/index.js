@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Image } from "@chakra-ui/react";
 import moment from "moment";
 import { useBasket } from "../../contexts/BasketContext";
+import productPlaceholder from "../../assets/images/product-placeholder.jpeg";
 
 const Card = ({ item }) => {
   const { addToBasket, items } = useBasket();
@@ -19,7 +20,15 @@ const Card = ({ item }) => {
       boxShadow={" 0px 4px 10px rgba(0, 0, 0, 0.1)"}
     >
       <Link to={`/product/${item._id}`}>
-        <Image src={item.photos[0]} alt="product" loading="lazy"></Image>
+        <Image
+          height={200}
+          width={400}
+          backgroundPosition={"contain"}
+          backgroundRepeat={"no-repeat"}
+          src={item.photos[0] ? item.photos[0] : productPlaceholder}
+          alt="product"
+          loading="lazy"
+        ></Image>
         <Box p={"6"} display={"flex"} flexDir={"column"}>
           <Box display="flex" alignItems={"baseline"}>
             {moment(item.createdAt).format("DD/MM/YYYY")}
