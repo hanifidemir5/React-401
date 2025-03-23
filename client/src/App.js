@@ -16,10 +16,13 @@ import AdminProducts from "./pages/Admin/Products/index.js";
 import Orders from "./pages/Admin/Orders/index.js";
 import AdminProductDetail from "./pages/Admin/ProductDetail/index.js";
 import NewProduct from "./pages/Admin/Products/new.js";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Provider>
         <div id="content">
           <Navbar />

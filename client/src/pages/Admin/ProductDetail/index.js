@@ -4,7 +4,9 @@ import { fetchProduct, updateProduct } from "../../../api";
 import { useNavigate, useParams } from "react-router-dom";
 import { FieldArray, Form, Formik } from "formik";
 import validationSchema from "./validations";
-import { message } from "antd";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 const ProductDetail = () => {
   const { product_id } = useParams();
 
@@ -13,24 +15,42 @@ const ProductDetail = () => {
   const navigate = useNavigate();
 
   const updateMutation = useMutation({
-    mutationFn: (updatedData) => updateProduct(updatedData, product_id), // Correct function
+    mutationFn: (updatedData) => updateProduct(updatedData, product_id),
     onSuccess: () => {
-      queryClient.invalidateQueries(["admin:products"]); // Refresh product list
-      queryClient.invalidateQueries(["admin:product", product_id]); // Refresh the updated product
-      navigate("/admin/products"); // Redirect after update
+      queryClient.invalidateQueries(["admin:products"]);
+      queryClient.invalidateQueries(["admin:product", product_id]);
+      navigate("/admin/products");
     },
   });
 
   const handleSubmit = async (values, bag) => {
-    message.loading({ content: "Loading...", key: "product_update" });
+    const toastId = toast.loading("Loading...");
 
     try {
       updateMutation.mutate(values, {
-        onError: (error) => alert(error.message),
+        onError: (error) => {
+          toast.update(toastId, { render: error.message, type: "error", isLoading: false, autoClose: 2000 });
+        },
       });
-      message.success({ content: "The product successfully updated.", key: "product_update", duration: 2 });
+      try {
+        toast.update(toastId, {
+          render: "The product successfully updated.",
+          type: "success",
+          isLoading: false,
+          autoClose: 2000,
+          position: "bottom-right",
+        });
+      } catch (e) {
+        console.log("not successfull");
+      }
     } catch (e) {
-      message.error({ content: "The product is not updated properly." });
+      toast.update(toastId, {
+        render: "The product is not updated properly.",
+        type: "error",
+        isLoading: false,
+        autoClose: 2000,
+        position: "bottom-right",
+      });
     }
   };
 
