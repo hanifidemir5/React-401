@@ -13,11 +13,11 @@ const NewProduct = (props) => {
   const navigate = useNavigate();
 
   const createMutation = useMutation({
-    mutationFn: (createData) => createProduct(createData), // Correct function
+    mutationFn: (createData) => createProduct(createData),
     onSuccess: () => {
-      queryClient.invalidateQueries(["admin:products"]); // Refresh product list
-      queryClient.invalidateQueries(["admin:product"]); // Refresh the updated product
-      navigate("/admin/products"); // Redirect after update
+      queryClient.invalidateQueries(["admin:products"]);
+      queryClient.invalidateQueries(["admin:product"]);
+      navigate("/admin/products");
     },
   });
 
@@ -123,23 +123,22 @@ const NewProduct = (props) => {
                   <FieldArray
                     name="photos"
                     render={(arrayHelpers) => (
-                      <div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                         {values.photos &&
                           values.photos.map((photo, index) => (
-                            <div key={index}>
+                            <div key={index} style={{ display: "flex", gap: "2px" }}>
                               <Input
                                 name={`photos.${index}`}
                                 value={photo}
                                 disabled={isSubmitting}
                                 onChange={handleChange}
-                                width={"3xl"}
                               />
                               <Button ml={4} type="button" colorScheme="red" onClick={() => arrayHelpers.remove(index)}>
                                 Remove
                               </Button>
                             </div>
                           ))}
-                        <Button mt={5} type="button" onClick={() => arrayHelpers.push("")}>
+                        <Button mt={5} type="button" onClick={() => arrayHelpers.push("")} alignSelf={"flex-start"}>
                           Add a photo
                         </Button>
                       </div>

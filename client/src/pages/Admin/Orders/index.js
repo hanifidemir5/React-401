@@ -15,37 +15,39 @@ const Orders = (props) => {
   }
 
   return (
-    <>
-      <Text fontSize={"2xl"}>Orders</Text>
-      <Table variant={"simple"}>
-        <Thead>
-          <Tr>
-            <Th>User</Th>
-            <Th>Address</Th>
-            <Th>Items</Th>
-            <Th>Actions</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {data.map((item) => (
-            <Tr key={item._id}>
-              <Td>{item.user.email}</Td>
-              <Td>{item.address}</Td>
-              <Td isNumeric>
-                <Text display={"flex"} alignSelf={"flex-start"}>
-                  {item.items.length}
-                </Text>
-              </Td>
-              <Td>
-                <Box display={"flex"} gap={"1rem"}>
-                  <Button colorScheme="blue">Edit</Button> <Button colorScheme="red">Remove</Button>
-                </Box>
-              </Td>
+    <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+      <div>
+        <Text fontSize={"2xl"}>Orders</Text>
+        <Table variant={"simple"} style={{ width: "100%" }}>
+          <Thead>
+            <Tr>
+              <Th>User</Th>
+              <Th>Address</Th>
+              <Th>Items</Th>
+              <Th>Actions</Th>
             </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </>
+          </Thead>
+          <Tbody>
+            {data.map((item) => (
+              <Tr key={item._id}>
+                <Td>{item.user.email}</Td>
+                <Td>{item.address}</Td>
+                <Td isNumeric>
+                  <Text display={"flex"} alignSelf={"flex-start"}>
+                    {item.items.length}
+                  </Text>
+                </Td>
+                <Td>
+                  <Box display={"flex"} gap={"1rem"}>
+                    <Button colorScheme="blue">Edit</Button> <Button colorScheme="red">Remove</Button>
+                  </Box>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </div>
+    </div>
   );
 };
 

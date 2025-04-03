@@ -150,7 +150,6 @@ const ProductDetail = () => {
                                 value={photo}
                                 disabled={isSubmitting}
                                 onChange={handleChange}
-                                width={"3xl"}
                               />
 
                               <Button ml={4} type="button" colorScheme="red" onClick={() => arrayHelpers.remove(index)}>
